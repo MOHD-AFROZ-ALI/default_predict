@@ -1,0 +1,229 @@
+Project Root: credit_default_app/
+credit_default_app/
+├── app.py                              # Main Streamlit entry point
+├── requirements.txt                    # Dependencies
+├── README.md                          # Project documentation
+├── .gitignore                         # Git ignore file
+├── config.yaml                        # Configuration file
+├── src/                               # Source code directory
+│   ├── __init__.py
+│   ├── config/                        # Configuration management
+│   │   ├── __init__.py
+│   │   ├── settings.py                # App settings and constants
+│   │   └── constants.py               # Global constants
+│   ├── data/                          # Data processing layer
+│   │   ├── __init__.py
+│   │   ├── data_processor.py          # Main data processing class
+│   │   └── data_loader.py             # Data loading utilities
+│   ├── models/                        # Machine learning models
+│   │   ├── __init__.py
+│   │   ├── model_manager.py           # Model management class
+│   │   └── algorithms.py              # ML algorithm implementations
+│   ├── explainability/                # SHAP and model explainability
+│   │   ├── __init__.py
+│   │   └── shap_engine.py             # SHAP explanation functions
+│   ├── visualization/                 # Visualization components
+│   │   ├── __init__.py
+│   │   ├── charts.py                  # Chart creation functions
+│   │   └── dashboards.py              # Dashboard components
+│   ├── prediction/                    # Prediction services
+│   │   ├── __init__.py
+│   │   ├── individual_risk.py         # Individual risk assessment
+│   │   └── batch_processor.py         # Batch prediction processing
+│   ├── analytics/                     # Advanced analytics
+│   │   ├── __init__.py
+│   │   └── advanced_analytics.py      # Statistical and advanced analytics
+│   ├── business/                      # Business intelligence layer
+│   │   ├── __init__.py
+│   │   ├── segmentation.py            # Customer segmentation
+│   │   └── compliance.py              # Compliance and regulatory
+│   └── utils/                         # Utility functions
+│       ├── __init__.py
+│       └── helpers.py                 # Helper and utility functions
+├── pages/                             # Streamlit pages
+│   ├── __init__.py
+│   └── streamlit_pages.py             # Page rendering functions
+├── assets/                            # Static assets
+│   ├── css/                           # Custom CSS
+│   └── images/                        # Images and icons
+├── data/                              # Data storage
+│   ├── raw/                           # Raw data files
+│   ├── processed/                     # Processed data
+│   └── models/                        # Saved model files
+└── tests/                             # Test files
+    ├── __init__.py
+    └── test_functions.py              # Unit tests
+🔧 DETAILED FUNCTION PLACEMENT MAPPING
+1. src/config/settings.py
+Functions from Chunks 1-2:
+
+get_app_config()
+load_feature_config()
+get_model_parameters()
+setup_logging_config()
+2. src/config/constants.py
+Constants and Variables:
+
+UCI_FEATURE_COLUMNS
+RISK_CATEGORIES
+MODEL_THRESHOLDS
+COLOR_SCHEMES
+3. src/data/data_processor.py
+Functions from Chunks 1-2 (DataProcessor Class):
+
+load_uci_credit_dataset(file_path=None, sample_size=None)
+_generate_synthetic_uci_dataset(n_samples=10000)
+_validate_uci_structure(df)
+perform_data_quality_check(df)
+preprocess_data(df, target_col='default.payment.next.month')
+4. src/data/data_loader.py
+Additional Data Loading Functions:
+
+load_csv_file(file_path)
+validate_file_format(file_path)
+handle_file_upload(uploaded_file)
+cache_data_loading()
+5. src/models/model_manager.py
+Functions from Chunks 1-2 (ModelManager Class):
+
+initialize_models()
+train_model(model_name, X_train, y_train, X_val, y_val)
+_calculate_metrics(y_true, y_pred, y_pred_proba)
+_get_feature_importance(model, feature_names)
+predict_single(model_name, features)
+6. src/models/algorithms.py
+Model Implementation Functions:
+
+create_xgboost_model()
+create_random_forest_model()
+create_logistic_regression_model()
+create_gradient_boosting_model()
+ensemble_models()
+7. src/explainability/shap_engine.py
+Functions from Chunk 3 (SHAP Explainability):
+
+initialize_shap_explainer(model, X_train)
+compute_shap_values(explainer, X_input)
+generate_summary_plot(shap_values, feature_names)
+generate_force_plot(explainer, shap_values, X_row)
+generate_waterfall_plot(...)
+generate_business_explanation(shap_values, feature_names)
+8. src/visualization/charts.py
+Functions from Chunk 4 (Visualization Toolkit):
+
+create_performance_metrics_chart(metrics_dict)
+create_confusion_matrix_simple(cm)
+create_roc_curve(y_true, y_score)
+create_risk_segments_pie(risk_percentages)
+create_performance_gauge(score)
+9. src/visualization/dashboards.py
+Functions from Chunk 5 (Dashboard System):
+
+load_layout_template(name) (LayoutTemplateManager)
+render_section(name, content_dict) (LayoutTemplateManager)
+calculate_kpis(predictions) (KPIDefinitionManager)
+format_kpi_cards(kpi_dict) (KPIDefinitionManager)
+initialize_state(defaults) (DashboardStateManager)
+update_state(key, value) (DashboardStateManager)
+10. src/prediction/individual_risk.py
+Functions from Chunk 6 (Individual Risk Prediction):
+
+create_risk_assessment_form_config()
+build_customer_input_form(form_config)
+validate_form_inputs(form_data, config)
+sanitize_credit_data_inputs(form_data)
+create_prediction_engine()
+calculate_live_prediction(form_data, engine_config)
+implement_prediction_caching(input, result)
+integrate_realtime_shap(input, result)
+process_background_predictions(batch)
+11. src/prediction/batch_processor.py
+Functions from Chunk 7 (Batch Prediction Engine):
+
+configure_batch_upload_settings()
+validate_upload_file(file_path, config)
+process_batch_prediction(input_file_path, model_path, config)
+generate_batch_summary(result_df)
+export_batch_results(result_df, export_path, format='csv')
+12. src/analytics/advanced_analytics.py
+Functions from Chunk 8 (Advanced Analytics):
+
+calculate_advanced_descriptive_statistics(data, feature_cols, target)
+analyze_feature_correlations_advanced(data, feature_cols, target, threshold, p_value)
+create_model_performance_dashboard(model_metrics, model_names, save_path)
+13. src/business/segmentation.py
+Functions from Chunk 9 (Customer Segmentation):
+
+__init__() (CustomerSegmentationEngine)
+prepare_segmentation_features(df) (CustomerSegmentationEngine)
+determine_optimal_clusters(X) (CustomerSegmentationEngine)
+perform_clustering(X) (CustomerSegmentationEngine)
+create_segment_profiles(df, cluster_labels) (CustomerSegmentationEngine)
+visualize_segments(...) (CustomerSegmentationEngine)
+fit_transform(df) (CustomerSegmentationEngine)
+save_segmentation_results(path) (CustomerSegmentationEngine)
+calculate_segment_statistics(...) (RiskSegmentAnalyzer)
+perform_correlation_analysis(...) (RiskSegmentAnalyzer)
+generate_risk_profile_summary(...) (RiskSegmentAnalyzer)
+analyze_migration_patterns(df, segment_col, time_col) (SegmentMigrationAnalyzer)
+14. src/business/compliance.py
+Functions from Chunk 9 (Compliance & Strategic Analytics):
+
+build_regulatory_compliance_dashboard()
+generate_audit_trail_reports()
+create_fair_lending_analysis()
+build_model_governance_reports()
+generate_stress_testing_compliance()
+create_strategic_kpi_dashboard()
+build_profitability_analysis()
+generate_risk_adjusted_returns()
+create_capital_allocation_insights()
+build_performance_benchmarking()
+15. src/utils/helpers.py
+Utility Functions:
+
+format_currency(amount)
+format_percentage(value)
+calculate_age(birth_date)
+validate_email(email)
+generate_report_id()
+log_user_action(action, user_id)
+sanitize_input(input_value)
+create_cache_key(data)
+16. pages/streamlit_pages.py
+Streamlit Page Functions:
+
+render_home_page()
+render_data_upload_page()
+render_individual_prediction_page()
+render_batch_prediction_page()
+render_analytics_dashboard()
+render_business_intelligence_page()
+render_model_performance_page()
+render_settings_page()
+17. app.py
+Main Application Functions:
+
+main()
+setup_page_config()
+initialize_session_state()
+render_sidebar()
+load_css_styles()
+📊 IMPLEMENTATION STATISTICS
+Total Files: 17 Python files
+Total Functions: 85+ functions
+Total Classes: 8 classes
+Chunks Covered: All 9 chunks
+Architecture: Modular, scalable, production-ready
+🎯 IMPLEMENTATION ORDER
+Configuration Layer (settings.py, constants.py)
+Data Layer (data_processor.py, data_loader.py)
+Model Layer (model_manager.py, algorithms.py)
+Explainability Layer (shap_engine.py)
+Visualization Layer (charts.py, dashboards.py)
+Prediction Layer (individual_risk.py, batch_processor.py)
+Analytics Layer (advanced_analytics.py)
+Business Layer (segmentation.py, compliance.py)
+Utilities (helpers.py)
+UI Layer (streamlit_pages.py)
+Main Application (app.py)
