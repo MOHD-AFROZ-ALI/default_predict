@@ -1,0 +1,460 @@
+app:
+  name: Credit Default Prediction System
+  version: 1.0.0
+  description: Machine learning system for predicting credit default risk
+  author: AI Assistant
+  environment: development
+  debug: true
+  timezone: UTC
+  language: en
+  theme: light
+streamlit:
+  page_title: Credit Default Prediction System
+  page_icon: "\U0001F4B3"
+  layout: wide
+  initial_sidebar_state: expanded
+  menu_items:
+    Get Help: https://github.com/your-repo/credit-default-prediction
+    Report a bug: https://github.com/your-repo/credit-default-prediction/issues
+    About: Credit Default Prediction System v1.0.0
+  max_upload_size: 200
+  enable_hashing: true
+  show_error_details: true
+data:
+  paths:
+    raw_data: ./data/raw/
+    processed_data: ./data/processed/
+    models: ./data/models/
+    outputs: ./data/outputs/
+    logs: ./logs/
+    temp: ./data/temp/
+    backup: ./data/backup/
+  files:
+    train_data: train_data.csv
+    test_data: test_data.csv
+    validation_data: validation_data.csv
+    feature_names: feature_names.json
+    preprocessing_pipeline: preprocessing_pipeline.pkl
+    model_metadata: model_metadata.json
+  preprocessing:
+    missing_value_strategy: median
+    outlier_detection: true
+    outlier_method: iqr
+    outlier_threshold: 3.0
+    scaling_method: standard
+    encoding_method: onehot
+    feature_selection: true
+    feature_selection_method: mutual_info
+    max_features: 50
+    correlation_threshold: 0.95
+  validation:
+    test_size: 0.2
+    validation_size: 0.1
+    random_state: 42
+    stratify: true
+    shuffle: true
+    cross_validation_folds: 5
+  quality_checks:
+    min_samples: 1000
+    max_missing_percentage: 30
+    min_target_class_percentage: 5
+    max_target_class_percentage: 95
+    check_data_drift: true
+    drift_threshold: 0.1
+model:
+  default_algorithm: random_forest
+  algorithms:
+    random_forest:
+      n_estimators: 100
+      max_depth: 10
+      min_samples_split: 5
+      min_samples_leaf: 2
+      max_features: sqrt
+      bootstrap: true
+      random_state: 42
+      n_jobs: -1
+      class_weight: balanced
+    xgboost:
+      n_estimators: 100
+      max_depth: 6
+      learning_rate: 0.1
+      subsample: 0.8
+      colsample_bytree: 0.8
+      random_state: 42
+      n_jobs: -1
+      scale_pos_weight: 1
+      eval_metric: logloss
+    logistic_regression:
+      C: 1.0
+      penalty: l2
+      solver: liblinear
+      max_iter: 1000
+      random_state: 42
+      class_weight: balanced
+    neural_network:
+      hidden_layer_sizes:
+      - 100
+      - 50
+      activation: relu
+      solver: adam
+      alpha: 0.0001
+      learning_rate: constant
+      learning_rate_init: 0.001
+      max_iter: 500
+      random_state: 42
+      early_stopping: true
+      validation_fraction: 0.1
+    gradient_boosting:
+      n_estimators: 100
+      learning_rate: 0.1
+      max_depth: 3
+      min_samples_split: 2
+      min_samples_leaf: 1
+      subsample: 1.0
+      random_state: 42
+  hyperparameter_tuning:
+    enabled: true
+    method: grid_search
+    cv_folds: 3
+    scoring: roc_auc
+    n_iter: 50
+    n_jobs: -1
+    verbose: 1
+  ensemble:
+    enabled: false
+    method: voting
+    voting_type: soft
+    weights: null
+  performance_thresholds:
+    min_accuracy: 0.75
+    min_precision: 0.7
+    min_recall: 0.7
+    min_f1_score: 0.7
+    min_auc_roc: 0.8
+    min_auc_pr: 0.6
+risk_assessment:
+  thresholds:
+    very_low_risk: 0.2
+    low_risk: 0.35
+    medium_risk: 0.6
+    high_risk: 0.8
+  risk_levels:
+    very_low:
+      label: Very Low Risk
+      color: '#00d2ff'
+      action: approve
+      recommendation: APPROVE - Excellent credit candidate
+    low:
+      label: Low Risk
+      color: '#51cf66'
+      action: approve
+      recommendation: APPROVE - Good credit candidate
+    medium:
+      label: Medium Risk
+      color: '#ffd93d'
+      action: review
+      recommendation: REVIEW - Additional verification recommended
+    high:
+      label: High Risk
+      color: '#ff6b6b'
+      action: decline
+      recommendation: DECLINE - High probability of default
+    very_high:
+      label: Very High Risk
+      color: '#8b0000'
+      action: decline
+      recommendation: DECLINE - Very high probability of default
+  business_rules:
+    min_credit_score: 300
+    max_debt_to_income: 100
+    min_employment_years: 0
+    max_loan_to_income_ratio: 5.0
+    bankruptcy_restriction_years: 7
+    foreclosure_restriction_years: 3
+features:
+  categorical_mappings:
+    education_level:
+      High School: 1
+      Bachelor's: 2
+      Master's: 3
+      PhD: 4
+    marital_status:
+      Single: 1
+      Married: 2
+      Divorced: 3
+      Widowed: 4
+    home_ownership:
+      Rent: 1
+      Own: 2
+      Mortgage: 3
+    employment_type:
+      Full-time: 4
+      Part-time: 3
+      Self-employed: 2
+      Unemployed: 1
+    loan_purpose:
+      Personal: 1
+      Auto: 2
+      Home: 3
+      Business: 4
+      Education: 5
+      Debt Consolidation: 6
+    collateral:
+      None: 0
+      Auto: 1
+      Real Estate: 2
+      Other: 3
+    binary:
+      'No': 0
+      'Yes': 1
+  derived_features:
+    monthly_income: annual_income / 12
+    loan_to_income_ratio: loan_amount / annual_income
+    monthly_payment_estimate: calculate_monthly_payment(loan_amount, interest_rate,
+      loan_term)
+    payment_to_income_ratio: monthly_payment_estimate * 12 / annual_income
+    debt_service_ratio: (monthly_expenses + monthly_payment_estimate) / monthly_income
+    credit_utilization_ratio: credit_utilization / 100
+    age_group: categorize_age(age)
+    income_group: categorize_income(annual_income)
+    credit_score_group: categorize_credit_score(credit_score)
+  feature_importance_threshold: 0.01
+  correlation_threshold: 0.95
+  variance_threshold: 0.01
+api:
+  host: 0.0.0.0
+  port: 8000
+  debug: true
+  reload: true
+  workers: 1
+  timeout: 30
+  max_request_size: 10485760
+  cors:
+    enabled: true
+    origins:
+    - '*'
+    methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+    headers:
+    - '*'
+  rate_limiting:
+    enabled: true
+    requests_per_minute: 100
+    requests_per_hour: 1000
+    requests_per_day: 10000
+  authentication:
+    enabled: false
+    method: jwt
+    secret_key: your-secret-key-here
+    algorithm: HS256
+    expire_minutes: 30
+  endpoints:
+    predict: /api/v1/predict
+    batch_predict: /api/v1/batch-predict
+    model_info: /api/v1/model/info
+    health: /api/v1/health
+    metrics: /api/v1/metrics
+database:
+  enabled: false
+  type: sqlite
+  connection:
+    host: localhost
+    port: 5432
+    database: credit_default_db
+    username: user
+    password: password
+    pool_size: 10
+    max_overflow: 20
+    pool_timeout: 30
+    pool_recycle: 3600
+  tables:
+    predictions: predictions
+    models: models
+    users: users
+    audit_log: audit_log
+  backup:
+    enabled: true
+    frequency: daily
+    retention_days: 30
+    location: ./data/backup/db/
+logging:
+  level: INFO
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  date_format: '%Y-%m-%d %H:%M:%S'
+  handlers:
+    console:
+      enabled: true
+      level: INFO
+    file:
+      enabled: true
+      level: DEBUG
+      filename: logs/credit_default_system.log
+      max_bytes: 10485760
+      backup_count: 5
+      rotation: size
+    error_file:
+      enabled: true
+      level: ERROR
+      filename: logs/errors.log
+      max_bytes: 5242880
+      backup_count: 3
+  loggers:
+    app: INFO
+    model: DEBUG
+    api: INFO
+    database: WARNING
+    security: INFO
+monitoring:
+  enabled: true
+  metrics:
+    prediction_latency: true
+    model_accuracy: true
+    data_drift: true
+    system_resources: true
+    error_rates: true
+  alerts:
+    email:
+      enabled: false
+      smtp_server: smtp.gmail.com
+      smtp_port: 587
+      username: your-email@gmail.com
+      password: your-app-password
+      recipients:
+      - admin@company.com
+    slack:
+      enabled: false
+      webhook_url: https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK
+      channel: '#alerts'
+    thresholds:
+      accuracy_drop: 0.05
+      latency_increase: 2.0
+      error_rate: 0.1
+      data_drift_score: 0.2
+  dashboard:
+    enabled: true
+    refresh_interval: 30
+    retention_days: 90
+security:
+  encryption:
+    enabled: true
+    algorithm: AES-256
+    key_rotation_days: 90
+  data_privacy:
+    anonymize_logs: true
+    mask_sensitive_fields: true
+    data_retention_days: 365
+    gdpr_compliance: true
+  access_control:
+    enabled: false
+    roles:
+    - admin
+    - analyst
+    - viewer
+    permissions:
+      admin:
+      - read
+      - write
+      - delete
+      - admin
+      analyst:
+      - read
+      - write
+      viewer:
+      - read
+  audit:
+    enabled: true
+    log_all_requests: true
+    log_predictions: true
+    log_model_changes: true
+performance:
+  caching:
+    enabled: true
+    backend: memory
+    ttl: 3600
+    max_size: 1000
+  batch_processing:
+    enabled: true
+    batch_size: 1000
+    max_workers: 4
+    timeout: 300
+  model_optimization:
+    quantization: false
+    pruning: false
+    distillation: false
+  resource_limits:
+    max_memory_mb: 2048
+    max_cpu_percent: 80
+    max_prediction_time: 5.0
+testing:
+  unit_tests:
+    coverage_threshold: 80
+    test_data_size: 1000
+  integration_tests:
+    api_tests: true
+    database_tests: false
+    end_to_end_tests: true
+  model_tests:
+    performance_tests: true
+    bias_tests: true
+    robustness_tests: true
+    drift_tests: true
+  load_tests:
+    enabled: false
+    concurrent_users: 100
+    duration_minutes: 10
+    ramp_up_seconds: 60
+deployment:
+  environment: development
+  containerization:
+    enabled: true
+    platform: docker
+    image_name: credit-default-prediction
+    tag: latest
+  scaling:
+    auto_scaling: false
+    min_instances: 1
+    max_instances: 5
+    cpu_threshold: 70
+    memory_threshold: 80
+  health_checks:
+    enabled: true
+    endpoint: /health
+    interval_seconds: 30
+    timeout_seconds: 10
+    failure_threshold: 3
+backup:
+  enabled: true
+  schedule: daily
+  retention_days: 30
+  locations:
+    local: ./data/backup/
+    cloud: null
+  components:
+    models: true
+    data: true
+    config: true
+    logs: false
+  compression: true
+  encryption: true
+external_services:
+  credit_bureau:
+    enabled: false
+    provider: experian
+    api_key: your-api-key
+    endpoint: https://api.experian.com/v1/
+    timeout: 10
+  notification_service:
+    enabled: false
+    provider: twilio
+    api_key: your-api-key
+    from_number: '+1234567890'
+  cloud_storage:
+    enabled: false
+    provider: aws_s3
+    bucket: your-bucket-name
+    region: us-east-1
+    access_key: your-access-key
+    secret_key: your-secret-key
